@@ -1,0 +1,35 @@
+---
+title: "Interaction between leaflet and datatable"
+output: html_document
+---
+
+## Installation
+
+```{r, eval=FALSE}
+devtools::install_github("rstudio/crosstalk")
+devtools::install_github("rstudio/leaflet")
+devtools::install_github("rstudio/DT")
+```
+
+## Reproducible data
+
+```{r}
+set.seed(2)
+df_shared <- crosstalk::SharedData$new(
+  data.frame(
+    longitude = runif(10, 5, 6),
+    latitude = runif(10, 45, 46),
+    tags = sample(letters[1:3], 10, TRUE)
+  )
+)
+```
+
+```{r}
+library(leaflet)
+
+leaflet(data = df_shared) %>%
+  addTiles() %>%
+  addMarkers()
+
+DT::datatable(df_shared)
+```
