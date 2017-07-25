@@ -1,0 +1,16 @@
+---
+title: Example 1
+header-includes:
+  - \input{header.txt}
+  # - \titlegraphic{\includegraphics[width=0.3\paperwidth]{eight_squares.png}}
+output:
+  beamer_presentation:
+    keep_tex: true
+    # includes:
+    #   in_header: header.txt
+
+---
+
+### This is a test
+
+Blabla

@@ -1,0 +1,2 @@
+\usepackage{fancyhdr}
+\titlegraphic{\includegraphics[width=0.3\paperwidth]{eight_squares.png}}
