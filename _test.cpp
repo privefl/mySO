@@ -1,6 +1,4 @@
-// [[Rcpp::depends(bigstatsr)]]
 #include <Rcpp.h>
-#include <colstats.hpp>
 using namespace Rcpp;
 
 // This is a simple example of exporting a C++ function to R. You can
@@ -14,8 +12,13 @@ using namespace Rcpp;
 //
 
 // [[Rcpp::export]]
-ListOf<NumericVector> timesTwo(NumericMatrix x) {
-  return bigcolvars(x);
+int main()
+{
+  int x = 10;
+  while (x-- > 0) // x goes to 0
+  {
+    printf("%d ", x);
+  }
 }
 
 
@@ -25,5 +28,5 @@ ListOf<NumericVector> timesTwo(NumericMatrix x) {
 //
 
 /*** R
-timesTwo(matrix(1:4, 2))
+main()
 */

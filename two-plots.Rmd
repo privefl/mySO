@@ -1,0 +1,13 @@
+---
+title: "Untitled"
+author: "Florian Privé"
+date: "23 juillet 2017"
+output: html_document
+---
+
+```{r gb, echo=F, eval=T}
+FIGDIR <- "."
+p1 <- file.path(FIGDIR, '3G7Kc.png')
+p2 <- file.path(FIGDIR, '3G7Kc.png')
+knitr::include_graphics(c(p1,p2))
+```
