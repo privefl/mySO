@@ -6,7 +6,10 @@ DFDrgDis <- Diseases
 GenesinAnnotation0 <- colSums(DrugDiseaseGeneMatrix)
 
 ## Main Functions
-GetEnrichedAnnotations <- function(DrugDiseaseName){ ## Function Begins
+GetEnrichedAnnotations <- function(DrugDiseaseName,
+                                   DrugDiseaseGeneMatrix,
+                                   DrugDiseaseFeatureMatrix,
+                                   DFDrgDis){ ## Function Begins
   TotalGenesCount = nrow(DrugDiseaseGeneMatrix)
   ## Get the assosciated Genes for each Drug or Disease
   DrugDiseaseGenes = GetGeneList(DrugDiseaseName,DFDrgDis)
@@ -92,3 +95,6 @@ rownames(EnrichedAnnotations) = DisNames
 
 ## Stop the Cluster
 parallel::stopCluster(Cluster)
+
+
+all.equal(EnrichedAnnotations, save)
