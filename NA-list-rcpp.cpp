@@ -11,6 +11,12 @@ bool checkNa(int i, List elemInCluster){
   }
 }
 
+// // [[Rcpp::export]]
+// bool checkNaDirk(int i, List elemInCluster) {
+//   
+//   return arma::is_finite(elemInCluster[i]);
+// }
+
 /*** R
 listToCheck <- list(NA, matrix(0,nrow = 2, ncol = 2))
 checkNa(0, listToCheck)
