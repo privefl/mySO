@@ -29,7 +29,8 @@ words <- rep(words, 100)
 get_one_diff <- function(words) {
   
   le <- lengths(words)
-  i_chr <- as.character(seq_len(max(le)))
+  K <- max(le)
+  i_chr <- as.character(seq_len(K))
   words.spl <- split(words, le)
   
   test_substitution <- function(i) {
@@ -41,17 +42,17 @@ get_one_diff <- function(words) {
   
   test_addition <- function(i) {
     word1 <- words[[i]]
-    le_add <- le[i] + 1
-    do.call(sum, lapply(words.spl[[i_chr[le_add]]], function(word2) {
-      all(word1 == word2[-1]) || all(word1 == word2[-le_add])
+    if ((le <- le[i]) == K) return(0);
+    do.call(sum, lapply(words.spl[[i_chr[le + 1]]], function(word2) {
+      isOneDiff(word1, word2)
     }))
   }
   
   test_deletion <- function(i) {
     word1 <- words[[i]]
-    le <- le[i]
+    if ((le <- le[i]) == 1) return(0);
     do.call(sum, lapply(words.spl[[i_chr[le - 1]]], function(word2) {
-      all(word1[-1] == word2) || all(word1[-le] == word2)
+      isOneDiff(word2, word1)
     }))
   }
   
