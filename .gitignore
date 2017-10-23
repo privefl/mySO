@@ -27,3 +27,5 @@ vignettes/*.pdf
 psm_*.csv
 tmp
 MEFES_K27AC.downsampled.sorted.wig
+access-twitter.R
+backingfiles
