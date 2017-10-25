@@ -41,18 +41,12 @@ system.time({
   })
 })
 
-for (Pn in 1:5) {
-  for (Pi in seq_len(Pn-1)) {
-    print(P_ni(Pn,Pi,eta1,eta2,p) * sqrt(test[Pi, Pn]))
-  }
-}
-
 
 
 P_ni2 <- function(n, eta1, eta2, p, d = 1 - p) {
   
   res <- matrix(0, n, n)
-  diag(res) <- seq_len(n)^p
+  diag(res) <- p^seq_len(n)
   
   C1 <- eta1 / eta2 * p / d
   C2 <- eta2 / (eta1 + eta2) * d
@@ -65,7 +59,7 @@ P_ni2 <- function(n, eta1, eta2, p, d = 1 - p) {
     for (i in seq_len(j - 1)) {
       seq1 <- seq(i, j - 1)
       res[i, j] <- sum(
-        precomputed[j-i, seq1-i+1] * precomputed[n+1, seq1+1] * C1^seq1
+        precomputed[j-i, seq1-i+1] * precomputed[j+1, seq1+1] * C1^seq1
       ) * C2_n[j] / C3_n[i]
     }
   }
@@ -73,8 +67,16 @@ P_ni2 <- function(n, eta1, eta2, p, d = 1 - p) {
   res
 }
 
-system.time(test <- P_ni2(400, eta1, eta2, p))
-n_k_matrix[[4]] <- test[as.matrix(n_k_matrix[, 2:1])]
+system.time({
+  test <- P_ni2(400, eta1, eta2, p)
+  n_k_matrix[[4]] <- test[as.matrix(n_k_matrix[, 2:1])]
+})
 
+# for (Pn in 1:5) {
+#   for (Pi in seq_len(Pn-1)) {
+#     print(P_ni(Pn,Pi,eta1,eta2,p))
+#     print(test[Pi, Pn])
+#   }
+# }
 
 all.equal(n_k_matrix[[3]], n_k_matrix[[4]])
