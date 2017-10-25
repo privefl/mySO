@@ -19,11 +19,11 @@ library(bigsnpr)
 
 popres <- snp_attach("backingfiles/popres.rds")
 G <- popres$genotypes
-G2 <- G[1:500, popres$map$chromosome == 6][, 1:5000]
+
+G2 <- G[1:500, popres$map$chromosome == 6][, 1:2000]
 dim(G2)
 n <- nrow(G2)
-
-nbNA <- VGAM::rbetabinom.ab(ncol(G2), size = n, shape1 = 0.6, shape2 = 10)
+nbNA <- VGAM::rbetabinom.ab(ncol(G2), size = n, shape1 = 0.6, shape2 = 5)
 sum(nbNA) / length(G2)
 
 p <- colMeans(G2) / 2
@@ -55,16 +55,36 @@ Atrans <- function(x, args) {
   cpMatVec4(G.scale2, x)
 }
 
+A2 <- function(x, args) {
+  pMatVec4_2(G.scale2, x)
+}
+
+Atrans2 <- function(x, args) {
+  cpMatVec4_2(G.scale2, x)
+}
+
 Rcpp::sourceCpp('test-prodNA.cpp')
 test <- RSpectra::svds(A, 10, Atrans = Atrans, dim = dim(G2))
-Metrics::rmse(test$u, svd0$u) / Metrics::rmse(test2$vectors, svd0$u)
-PC <- 6; plot(test$u[, PC], svd0$u[, PC])
+PC <- 5; plot(test$u[, PC], svd0$u[, PC])
+
+test4 <- RSpectra::svds(A2, 10, Atrans = Atrans2, dim = dim(G2))
+PC <- 5; plot(test$u[, PC], test4$u[, PC])
 
 
 test2 <- flashpcaR::flashpca(G2)
-PC <- 6; plot(test2$vectors[, PC], svd0$u[, PC])
-Metrics::rmse(test$u, svd0$u) / Metrics::rmse(test2$vectors, svd0$u)
+PC <- 5; plot(test2$vectors[, PC], svd0$u[, PC])
+Metrics::rmse(test$u[, 1:5], svd0$u[, 1:5]) / 
+  Metrics::rmse(test2$vectors[, 1:5], svd0$u[, 1:5])
+
+
+Metrics::rmse(test$u[, 1:5], svd0$u[, 1:5]) / 
+  Metrics::rmse(test4$u[, 1:5], svd0$u[, 1:5])
 
 # test3 <- multiSVD(G2)
 # Metrics::rmse(test$u, svd0$u) / Metrics::rmse(test3$u, svd0$u)
-# PC <- 6; plot(test3$u[, PC], svd0$u[, PC])
+# PC <- 6; plot(test3$u[, PC], test$u[, PC])
+
+sapply(1:10, function(i) cor(test$u[, i], svd0$u[, i])^2)
+sapply(1:10, function(i) cor(test2$vectors[, i], svd0$u[, i])^2)
+sapply(1:10, function(i) cor(test4$u[, i], svd0$u[, i])^2)
+# sapply(1:10, function(i) cor(test3$u[, i], svd0$u[, i])^2)
