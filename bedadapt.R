@@ -1,4 +1,4 @@
-bedfile <- "../POPRES_data/POPRES_allchr_QC_norel.bed"
+bedfile <- "../thesis/POPRES_data/POPRES_allchr_QC_norel.bed"
 
 library(bigsnpr)
 
@@ -13,7 +13,7 @@ test <- bedadaptXPtr(bedfile, n, m)
 
 Rcpp::sourceCpp('bedadapt2.cpp')
 ## Checking a 3 is much faster that checking a NA
-lookup <- bigsnpr:::getCode(NA.VAL = 3)
+lookup <- bigsnpr:::getCode()
 storage.mode(lookup) <- "double"
 test2 <- bedadapt2XPtr(bedfile, n, m, lookup)
 cmpt_af2(test2)
