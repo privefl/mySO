@@ -17,6 +17,7 @@ data_about <- google_analytics_4(
   dimensions = c("date"),  # , "pagePath", "hour", "medium"
   metrics = c("sessions")  # , "pageviews"
 )
+data_about
 
 blog_dates <- list.files("../RMARKDOWN/blog/_posts/") %>%
   stringr::str_sub(end = 10) %>%
@@ -33,8 +34,8 @@ data_blog %>%
   bigstatsr:::MY_THEME() +
   geom_vline(xintercept = blog_dates, color = "blue",
              linetype = 2, size = 1) +
-  geom_vline(xintercept = useR2017_dates, color = "green",
-             linetype = 3, size = 1) +
+  # geom_vline(xintercept = useR2017_dates, color = "green",
+  #            linetype = 3, size = 1) +
   geom_point(size = 2) +
   geom_line(aes(group = 1), size = 0.8) +
   geom_smooth(method = "loess", span = 0.25, color = "red") +
@@ -62,7 +63,7 @@ right_join(data_blog, data_about, by = "date") %>%
   geom_point(size = 2) +
   # geom_smooth(method = "loess", color = "red") +
   geom_smooth(method = "lm", color = "blue") +
-  labs(x = "Nombre de sessions sur mon blog", 
+  labs(x = "Nombre de sessions sur mon blog",
        y = "Nombre of sessions sur ma page") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -82,7 +83,7 @@ data_about_country <- google_analytics_4(
 
 data_about_country %>%
   mutate(country2 = ifelse(sessions < 5, "Others", country)) %>%
-  ggplot(aes(country2, sessions)) %>%
+  ggplot(aes(reorder(country2, -sessions), sessions)) %>%
   bigstatsr:::MY_THEME() +
   geom_bar(stat = "identity") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
