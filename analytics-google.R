@@ -39,7 +39,8 @@ data_blog %>%
   geom_point(size = 2) +
   geom_line(aes(group = 1), size = 0.8) +
   geom_smooth(method = "loess", span = 0.25, color = "red") +
-  labs(x = "Date", y = "Nombre of sessions sur mon blog") +
+  scale_y_continuous(minor_breaks = seq(0, 1000, 20)) +
+  labs(x = "Date", y = "Nombre de sessions sur mon blog") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 data_about %>%
@@ -54,7 +55,7 @@ data_about %>%
   geom_point(size = 2) +
   geom_line(aes(group = 1), size = 0.8) +
   geom_smooth(method = "loess", span = 0.25, color = "red") +
-  labs(x = "Date", y = "Nombre of sessions sur ma page") +
+  labs(x = "Date", y = "Nombre de sessions sur ma page") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 right_join(data_blog, data_about, by = "date") %>%
@@ -64,7 +65,9 @@ right_join(data_blog, data_about, by = "date") %>%
   # geom_smooth(method = "loess", color = "red") +
   geom_smooth(method = "lm", color = "blue") +
   labs(x = "Nombre de sessions sur mon blog",
-       y = "Nombre of sessions sur ma page") +
+       y = "Nombre de sessions sur ma page") +
+  scale_y_continuous(breaks = seq(0, 100, 2), 
+                     minor_breaks = seq(1, 100, 2)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 filter(data_about, sessions > 6)
