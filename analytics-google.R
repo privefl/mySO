@@ -40,6 +40,7 @@ data_blog %>%
   geom_point(size = 2) +
   geom_line(aes(group = 1), size = 0.8) +
   geom_smooth(method = "loess", span = 0.25, color = "red", se = FALSE) +
+  scale_x_continuous(breaks = c(0:3 * 30)) + 
   scale_y_sqrt(breaks = c(0, 100, 200, 400, 600), minor_breaks = seq(0, 3000, 50)) +
   labs(x = "Day number of the quarter", y = "Nombre de sessions sur mon blog") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
