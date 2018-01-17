@@ -7,7 +7,7 @@ output:
   xaringan::moon_reader:
     lib_dir: libs
     includes:
-      after_body: include_twitter.html
+      - after_body: include_twitter.html
     nature:
       highlightStyle: github
       highlightLines: true
@@ -28,6 +28,13 @@ Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharin
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="fr" dir="ltr">Il y a pas la pp :/<br>Yep, j&#39;avais noté ;) <a href="https://t.co/FdkwUX2ess">pic.twitter.com/FdkwUX2ess</a></p>&mdash; Bichaton 📊 (@_AntoineB) <a href="https://twitter.com/_AntoineB/status/930728129114591232?ref_src=twsrc%5Etfw">15 novembre 2017</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+---
+
+```{r, comment="", warning=FALSE}
+available::available("bigstatsr", browse = FALSE)
+```
 
 
 ---
