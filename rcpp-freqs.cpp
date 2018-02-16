@@ -15,6 +15,7 @@ NumericVector get_freq(NumericVector x, NumericVector breaks) {
 }
 
 /*** R
+# https://stackoverflow.com/questions/48834795/fast-method-for-calculating-frequency-with-rcpp
 x <- 100
 breaks <- seq(from=0, to=max(x)+1, length.out=101) 
 
@@ -26,9 +27,14 @@ all.equal(get_freq(tmp, breaks), get_freq_R(tmp, breaks))
 
 library(microbenchmark)
 microbenchmark(get_freq(runif(100, 1, 100), breaks),
-               get_freq(runif(1000, 1, 100), breaks),
-               get_freq(runif(3000, 1, 100), breaks),
-               get_freq_R(runif(100, 1, 100), breaks),
-               get_freq_R(runif(1000, 1, 100), breaks),
+               hist(runif(100, 1, 100), breaks = breaks, plot = FALSE)$counts,
+               get_freq_R(runif(100, 1, 100), breaks))
+
+microbenchmark(get_freq(runif(1000, 1, 100), breaks),
+               hist(runif(1000, 1, 100), breaks = breaks, plot = FALSE)$counts,
+               get_freq_R(runif(1000, 1, 100), breaks))
+
+microbenchmark(get_freq(runif(3000, 1, 100), breaks),
+               hist(runif(3000, 1, 100), breaks = breaks, plot = FALSE)$counts,
                get_freq_R(runif(3000, 1, 100), breaks))
 */
