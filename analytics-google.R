@@ -5,14 +5,14 @@ ga_auth()
 
 # (account_list <- ga_account_list())
 
-data_blog <- google_analytics_4(
+data_blog <- google_analytics(
   viewId = "152155542",
   date_range = ymd("2017-06-04", Sys.Date()),
   dimensions = c("date"),  # , "pagePath", "hour", "medium"
   metrics = c("sessions")  # , "pageviews"
 )
 
-data_about <- google_analytics_4(
+data_about <- google_analytics(
   viewId = "153879696",
   date_range = ymd("2017-06-26", Sys.Date()),
   dimensions = c("date"),  # , "pagePath", "hour", "medium"
@@ -81,7 +81,7 @@ filter(data_about, sessions > 6)
 
 
 
-data_about_country <- google_analytics_4(
+data_about_country <- google_analytics(
   viewId = "153879696",
   date_range = ymd("2017-06-26", Sys.Date()),
   dimensions = c("country"),  # , "pagePath", "hour", "medium"
