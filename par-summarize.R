@@ -1,25 +1,5 @@
 # Load packages
 library(dplyr)
-library(multidplyr)
-
-# # We will use built-in dataset - airquality
-# # dplyr
-# airquality %>% group_by(Month) %>% summarize(cnt = mean(Ozone, na.rm = TRUE))
-# 
-# # multidplyr
-# airquality %>% partition(Month) %>% summarize(cnt = n()) %>% collect()
-# 
-# 
-# library(purrr)
-# library(foreach)
-# DF <- tmp[!names(tmp) %in% attr(tmp, "vars")]
-# tmp <- foreach(attr(tmp, "indices")) {
-#   
-# }
-# 
-# 
-# dplyr:::group_by.data.frame
-
 
 tmp <- airquality %>% group_by(Month)
 str(tmp)
@@ -35,6 +15,8 @@ one_group <- function(gdf, i) {
 str(tmp)
 tmp2 <- one_group(tmp, 4)
 str(tmp2)
+
+str(structure(tmp, indices = 2))
 
 summarise(one_group(tmp, 2), cnt = n())
 
