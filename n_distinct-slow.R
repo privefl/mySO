@@ -1,5 +1,5 @@
 
-N  <- 1e7
+N  <- 1e7 
 therapyDF <- data.frame(patid = sample.int(N/2, size = N, replace = TRUE),
                         prodcode = sample(LETTERS, size = N, replace = TRUE), 
                         stringsAsFactors = FALSE)
