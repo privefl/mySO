@@ -1,0 +1,49 @@
+---
+title: "Performance Challenge"
+author: "Florian Privé"
+date: "June 16, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem
+
+I have this function to generate `K` times an ordered vector of `n2` elements sampled from `n` elements (without replacement).
+
+```{r}
+gen <- function(K, n, n2) {
+  withr::with_seed(1, replicate(K, sort(sample(n, n2))))
+}
+gen(K = 6, n = 5, n2 = 2)
+```
+
+I want to transform this integer matrix in a list of integer vectors specifying for a given value (from 1 to `n`) which columns contain this specific value:
+
+```{r}
+naive_solu <- function(mat, n) {
+  
+  res <- list()
+  for (i in seq_len(n)) {
+    res[[i]] <- which(mat == i, arr.ind = TRUE)[, 2]
+  }
+  res
+}
+naive_solu(gen(K = 6, n = 5, n2 = 2), n = 5)
+```
+
+## Performance
+
+The problem with this naive solution is that if I want to apply it for larger values, it would be slow:
+
+```{r}
+K <- 100; n <- 10e3; n2 <- 2e3
+mat <- gen(K, n, n2)
+system.time(naive_solu(mat, n))
+```
+
+Can you provide a faster solution? Using {Rcpp} is allowed here. Please send me your solution at florian.prive.21 \<at\> gmail.com. 
+
+I'll compile and comment the results in a blog post on June 20.
